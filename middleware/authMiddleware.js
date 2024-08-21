@@ -4,7 +4,7 @@ import User from "../models/user.js";
 export const authMiddleware = async (req, res, next) => {
   let token;
 
-  token = req.res.cookies.jwt;
+  token = req.cookies.jwt;
 
   if (!token) {
     return next(
@@ -25,5 +25,26 @@ export const authMiddleware = async (req, res, next) => {
     );
   }
 
-  const currentUser = await User.findById(decoded.id)
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
+    return next(
+      res.status(401).json({
+        message: "User not found",
+      })
+    );
+  }
+
+  req.user = currentUser;
+
+  next();
+};
+
+export const permissionUser = (...roles) => {
+  return (req, res, next) => {
+    // ['admin', 'maintainer']
+    if (!roles.includes(req.user.role)) {
+      return next(res.status(403).json({ message: "Access denied" }));
+    }
+    next();
+  };
 };

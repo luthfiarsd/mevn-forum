@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "server": "nodemon app.js",
+    "client": "npm run dev --prefix forum-app", 
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -22,5 +24,8 @@
     "mongoose": "^8.5.3",
     "morgan": "^1.10.0",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

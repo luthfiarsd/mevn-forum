@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menubar class="justify-center" :model="items">
+    <Menubar :model="items">
       <template #end>
         <Button
           style="
@@ -12,14 +12,14 @@
           "
           label="Login"
           icon="pi pi-user"
-          @click="visible = true"
+          @click="dialog = true"
         >
         </Button>
       </template>
     </Menubar>
 
     <FormAuthComp
-      v-model:visible="visible"
+      v-model:visible="dialog"
       pt:root:class="!border-0 !bg-transparent"
       pt:mask:class="backdrop-blur-sm"
     ></FormAuthComp>
@@ -30,8 +30,13 @@
 import { ref } from "vue";
 import Menubar from "primevue/menubar";
 import FormAuthComp from "../components/FormAuthComp.vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/stores/authStores";
 
-const visible = ref(false);
+const authStores = useAuthStore();
+
+// State pinia
+const { dialog } = storeToRefs(authStores);
 
 const items = ref([
   {

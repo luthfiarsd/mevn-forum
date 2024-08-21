@@ -12,7 +12,7 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Route Endpoint
-app.get("/", (req, res) => {
+app.get("/api/v1/test", (req, res) => {
   res.status(200).json({ message: "Home Endpoint" });
 });
 
