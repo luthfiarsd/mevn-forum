@@ -1,0 +1,60 @@
+<template>
+  <div>
+    <Menubar class="justify-center" :model="items">
+      <template #end>
+        <Button
+          style="
+            background-image: radial-gradient(
+              circle at left top,
+              var(--p-blue-300),
+              var(--p-blue-600)
+            );
+          "
+          label="Login"
+          icon="pi pi-user"
+          @click="visible = true"
+        >
+        </Button>
+      </template>
+    </Menubar>
+
+    <FormAuthComp
+      v-model:visible="visible"
+      pt:root:class="!border-0 !bg-transparent"
+      pt:mask:class="backdrop-blur-sm"
+    ></FormAuthComp>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import Menubar from "primevue/menubar";
+import FormAuthComp from "../components/FormAuthComp.vue";
+
+const visible = ref(false);
+
+const items = ref([
+  {
+    label: "Home",
+    icon: "pi pi-home",
+  },
+  {
+    label: "Projects",
+    icon: "pi pi-search",
+    items: [
+      {
+        label: "Components",
+        icon: "pi pi-bolt",
+      },
+      {
+        label: "Blocks",
+        icon: "pi pi-server",
+      },
+    ],
+  },
+  {
+    label: "Contact",
+    icon: "pi pi-envelope",
+  },
+]);
+</script>
