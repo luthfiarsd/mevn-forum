@@ -1,4 +1,4 @@
 
 <template>
-    <h1>Testing</h1>
+    <h1 class="font-bold">Homepage <br> You are not logged in at this time</h1>
 </template>
