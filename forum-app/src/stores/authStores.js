@@ -33,6 +33,25 @@ export const useAuthStore = defineStore("user", () => {
     }
   };
 
+  const registerUser = async (inputData) => {
+    try {
+      const { data } = await customFetch.post("/auth/register", {
+        name: inputData.name,
+        email: inputData.email,
+        password: inputData.password,
+      });
+      currentUser.value = data.data;
+      localStorage.setItem("user", JSON.stringify(data.data));
+
+      dialog.value = false;
+      router.push({ name: "dashboard" });
+    } catch (error) {
+      console.log(error);
+      errorAlert.value = true;
+      errorMessage.value = error.response.data.message;
+    }
+  };
+
   const logoutUser = async () => {
     try {
       localStorage.setItem("user", null);
@@ -52,5 +71,6 @@ export const useAuthStore = defineStore("user", () => {
     errorAlert,
     currentUser,
     logoutUser,
+    registerUser
   };
 });
