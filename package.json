@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon app.js",
-    "client": "npm run dev --prefix forum-app", 
+    "client": "npm run dev --prefix forum-app",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
@@ -23,6 +23,7 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.3",
     "morgan": "^1.10.0",
+    "quill": "^2.0.2",
     "validator": "^13.12.0"
   },
   "devDependencies": {

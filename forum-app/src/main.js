@@ -28,16 +28,20 @@ app.use(PrimeVue, {
 });
 
 pinia.use(({ store }) => {
-    store.router = markRaw(router)
+  store.router = markRaw(router);
 });
 
 // Global component
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import Editor from "primevue/editor";
+import Select from "primevue/select";
 
 app.component("InputText", InputText);
 app.component("Dialog", Dialog);
 app.component("Button", Button);
+app.component("Editor", Editor);
+app.component("Select", Select);
 
 app.mount("#app");
