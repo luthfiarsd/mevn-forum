@@ -47,7 +47,12 @@ export const updateQuestion = asyncHandler(async (req, res) => {
 
   const dataQuestion = await Question.findById(req.params.id);
 
-  checkPermission(req.user, dataQuestion.userId);
+  if (!dataQuestion) {
+    res.status(404);
+    throw new Error("Question not found");
+  }
+
+  checkPermission(req.user, dataQuestion.userId, res);
   dataQuestion.title = title;
   dataQuestion.question = question;
   dataQuestion.category = category;
@@ -60,6 +65,21 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   });
 });
 
-export const deleteQuestion = (req, res) => {
-  res.send("Delete pertanyaan");
-};
+export const deleteQuestion = asyncHandler(async (req, res) => {
+  const paramsId = req.params.id;
+
+  const dataQuestion = await Question.findById(paramsId);
+
+  if (!dataQuestion) {
+    res.status(404);
+    throw new Error("Question not found");
+  }
+
+  checkPermission(req.user, dataQuestion.userId, res);
+
+  await Question.findByIdAndDelete(paramsId);
+
+  return res.status(200).json({
+    message: "Successfully delete question",
+  });
+});

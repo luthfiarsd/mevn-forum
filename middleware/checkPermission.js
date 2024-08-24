@@ -1,11 +1,14 @@
-export const checkPermission = (requestUser, resourceUserId) => {
+export const checkPermission = (requestUser, resourceUserId, res) => {
   if (requestUser.role === "admin") {
     return;
   }
 
-  if (requestUser.userId === resourceUserId.toString()) {
+  if (requestUser._id.toString() === resourceUserId.toString()) {
     return;
   }
 
-  throw new Error('Unauthorized access, you can\'t modify other users\' properties')
+  res.status(401);
+  throw new Error(
+    "Unauthorized access, you can't modify other users' properties"
+  );
 };

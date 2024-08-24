@@ -32,6 +32,6 @@ router.put("/:id", authMiddleware, updateQuestion);
 
 // Delete document
 // GET /api/v1/question/:id
-router.delete("/:id", deleteQuestion);
+router.delete("/:id", authMiddleware, deleteQuestion);
 
 export default router;
