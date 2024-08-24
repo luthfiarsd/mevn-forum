@@ -2,7 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+
+// Router
 import authRouter from "./router/authRouter.js";
+import questionRouter from "./router/questionRouter.js";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
@@ -20,11 +23,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Route Endpoint
-app.get("/api/v1/test", (req, res) => {
-  res.status(200).json({ message: "Home Endpoint" });
-});
-
 // Connection DB
 mongoose
   .connect(process.env.DATABASE)
@@ -37,6 +35,7 @@ mongoose
 
 // Parent Router
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/question", questionRouter);
 
 // Error handler
 app.use(notFound);
