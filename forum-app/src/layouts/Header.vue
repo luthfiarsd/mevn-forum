@@ -25,8 +25,9 @@
                 var(--p-blue-600)
               );
             "
-            label="Home"
-            icon="pi pi-home"
+            label="Dashboard"
+            icon="pi pi-warehouse"
+            @click="DashboardPath"
           >
           </Button>
           <Button
@@ -61,11 +62,16 @@ import Menubar from "primevue/menubar";
 import FormAuthComp from "../components/FormAuthComp.vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/authStores";
+import { useRouter } from "vue-router";
 
 const authStores = useAuthStore();
+const router = useRouter();
 
 // Action pinia
 const { logoutUser } = authStores;
+const DashboardPath = () => {
+  router.push({ name: "dashboard" });
+};
 
 // State pinia
 const { dialog } = storeToRefs(authStores);
@@ -74,24 +80,16 @@ const items = ref([
   {
     label: "Home",
     icon: "pi pi-home",
+    command: () => {
+      router.push({ name: 'home' });
+    },
   },
   {
-    label: "Projects",
-    icon: "pi pi-search",
-    items: [
-      {
-        label: "Components",
-        icon: "pi pi-bolt",
-      },
-      {
-        label: "Blocks",
-        icon: "pi pi-server",
-      },
-    ],
-  },
-  {
-    label: "Contact",
-    icon: "pi pi-envelope",
+    label: "About",
+    icon: "pi pi-book",
+    command: () => {
+      router.push({ name: 'about' });
+    },
   },
 ]);
 </script>

@@ -15,16 +15,18 @@
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-2">
             <Button icon="pi pi-thumbs-up-fill" rounded text></Button>
-            <span> {{ props.data.countVote }}</span>
+            <span>{{ props.data.countVote ?? 0 }}</span>
           </div>
           <span class="text-surface-500 dark:text-surface-400">{{
             dateFormat(props.data.createdAt)
           }}</span>
         </div>
       </template>
-      <router-link to="/" class="text-4xl text-primary no-underline">{{
-        props.data.title
-      }}</router-link>
+      <router-link
+        :to="{ name: 'detailquestion', params: { id: props.data._id } }"
+        class="text-4xl text-primary no-underline"
+        >{{ props.data.title }}</router-link
+      >
       <p class="my-3">
         <span v-html="props.data.question.substring(0, 200)"></span>
       </p>

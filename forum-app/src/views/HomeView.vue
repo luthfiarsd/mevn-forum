@@ -27,11 +27,14 @@
         >
           <FormQuestion @close="closeDialog()" @reload="allQuestion()" />
         </Dialog>
-        <list-question
-          v-for="q in questionData"
-          :key="q.id"
-          :data="q"
-        ></list-question>
+        <div v-if="questionData">
+          <list-question
+            v-for="q in questionData"
+            :key="q.id"
+            :data="q"
+          ></list-question>
+        </div>
+        <loading-spinner v-else></loading-spinner>
       </div>
     </div>
   </main>
@@ -45,6 +48,7 @@ import FormQuestion from "@/components/Question/FormQuestion.vue";
 import { ref, onMounted } from "vue";
 import customFetch from "@/api";
 import { useAuthStore } from "@/stores/authStores";
+import LoadingSpinner from "@/components/Question/LoadingSpinner.vue";
 
 const authStore = useAuthStore();
 const visible = ref(false);
