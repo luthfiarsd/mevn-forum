@@ -8,8 +8,9 @@
       </div>
       <div class="!bg-slate-200 col-span-10 p-3 rounded-md">
         <div class="flex justify-between">
-          <h2 class="text-4xl !font-bold">Questions List</h2>
+          <h2 class="text-4xl !font-bold">HipHopForum</h2>
           <Button
+            v-if="authStore.currentUser"
             label="Add"
             class="bg-slate-200"
             rounded
@@ -21,17 +22,16 @@
         <Dialog
           v-model:visible="visible"
           modal
-          header="Edit Profile"
+          header="Add Question"
           :style="{ width: '70%' }"
         >
-          <span class="text-surface-500 dark:text-surface-400 block mb-8"
-            >Update your information.</span
-          >
-          <FormQuestion @close="closeDialog()" />
+          <FormQuestion @close="closeDialog()" @reload="allQuestion()" />
         </Dialog>
-        <list-question></list-question>
-        <list-question></list-question>
-        <list-question></list-question>
+        <list-question
+          v-for="q in questionData"
+          :key="q.id"
+          :data="q"
+        ></list-question>
       </div>
     </div>
   </main>
@@ -42,11 +42,28 @@ import ListQuestion from "@/components/Question/ListQuestion.vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import FormQuestion from "@/components/Question/FormQuestion.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import customFetch from "@/api";
+import { useAuthStore } from "@/stores/authStores";
 
+const authStore = useAuthStore();
 const visible = ref(false);
+const questionData = ref(null);
+
+const allQuestion = async () => {
+  try {
+    const { data } = await customFetch.get("/question");
+    questionData.value = data.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const closeDialog = () => {
   visible.value = false;
 };
+
+onMounted(() => {
+  allQuestion();
+});
 </script>

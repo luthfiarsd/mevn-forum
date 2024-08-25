@@ -15,25 +15,20 @@
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-2">
             <Button icon="pi pi-thumbs-up-fill" rounded text></Button>
+            <span> {{ props.data.countVote }}</span>
           </div>
-          <span class="text-surface-500 dark:text-surface-400"
-            >Updated 2 hours ago</span
-          >
+          <span class="text-surface-500 dark:text-surface-400">{{
+            dateFormat(props.data.createdAt)
+          }}</span>
         </div>
       </template>
-      <router-link to="/" class="text-4xl text-primary no-underline"
-        >Judul Pertanyaan</router-link
-      >
+      <router-link to="/" class="text-4xl text-primary no-underline">{{
+        props.data.title
+      }}</router-link>
       <p class="my-3">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        <span v-html="props.data.question.substring(0, 200)"></span>
       </p>
-      <chip label="General"></chip>
+      <chip :label="props.data.category"></chip>
     </Panel>
   </div>
 </template>
@@ -42,4 +37,17 @@
 import Panel from "primevue/panel";
 import Avatar from "primevue/avatar";
 import Chip from "primevue/chip";
+
+const dateFormat = (dataInput) => {
+  const newDate = new Date(dataInput).toLocaleString();
+
+  return newDate;
+};
+
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
